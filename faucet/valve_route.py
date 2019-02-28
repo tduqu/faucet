@@ -799,9 +799,9 @@ class ValveIPv4RouteManager(ValveRouteManager):
         access_dict = {'0e:DE:AD:BE:EF:00': ['0.0.0.0']}
 
         if pkt_meta.eth_src in access_dict:
-            self.logger.info('[*] Allowing ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.ip_src))
+            self.logger.info('[*] Allowing ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.src_ip))
         else:
-            self.logger.info('[*] Denied ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.ip_src))
+            self.logger.info('[*] Denied ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.src_ip))
             return ofmsgs
 
 
