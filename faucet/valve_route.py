@@ -802,7 +802,7 @@ class ValveIPv4RouteManager(ValveRouteManager):
             self.logger.info('[*] Allowing ARP from:\t{}'.format(pkt_meta.eth_src))
         else:
             self.logger.info('[*] Denied ARP from:\t{}'.format(pkt_meta.eth_src))
-            return ofmsgs
+            # return ofmsgs
 
 
         opcode = arp_pkt.opcode
