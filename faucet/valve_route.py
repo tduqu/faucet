@@ -787,6 +787,24 @@ class ValveIPv4RouteManager(ValveRouteManager):
         arp_pkt = pkt_meta.pkt.get_protocol(arp.arp)
         if arp_pkt is None:
             return ofmsgs
+
+        """
+        ZTN ARP @author Tyler D
+        access_dict = {'0e:DE:AD:BE:EF:00': ['0.0.0.0']}
+        '0e:DE:AD:BE:EF:00' in access_dict
+        '0.0.0.0' in access_dict['0e:DE:AD:BE:EF:00']
+        """
+        self.logger.info('[*] === ARP Received +++ [*]')
+
+        access_dict = {'0e:DE:AD:BE:EF:00': ['0.0.0.0']}
+
+        if pkt_meta.eth_src in access_dict:
+            self.logger.info('[*] Allowing ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.ip_src))
+        else:
+            self.logger.info('[*] Denied ARP from:\t{} with IP:\t{}'.format(pkt_meta.eth_src, pkt_meta.ip_src))
+            return ofmsgs
+
+
         opcode = arp_pkt.opcode
         if opcode == arp.ARP_REQUEST:
             if pkt_meta.eth_dst in (valve_of.mac.BROADCAST_STR, pkt_meta.vlan.faucet_mac):
